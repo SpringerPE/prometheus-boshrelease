@@ -1,0 +1,6 @@
+---
+name: varnish_exporter
+
+files:
+  - common/utils.sh
+  - varnish_exporter/prometheus_varnish_exporter-1.4.1.linux-amd64.tar.gz # https://github.com/jonnenauha/prometheus_varnish_exporter/releases/download/1.4.1/prometheus_varnish_exporter-1.4.1.linux-amd64.tar.gz

@@ -1,0 +1,10 @@
+---
+name: varnish_exporter
+
+packages:
+  - varnish_exporter
+
+templates:
+  bin/varnish_exporter_ctl: bin/varnish_exporter_ctl
+
+properties:

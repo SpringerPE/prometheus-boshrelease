@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eux
+
+# Copy common utils
+mkdir -p ${BOSH_INSTALL_TARGET}/common
+mkdir -p ${BOSH_INSTALL_TARGET}/varnish_exporter
+
+cp -a ${BOSH_COMPILE_TARGET}/common/* ${BOSH_INSTALL_TARGET}/common
+
+# Extract extract_exporter package
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+tar xzvf ${BOSH_COMPILE_TARGET}/varnish_exporter/prometheus_varnish_exporter-1.4.1.linux-amd64.tar.gz
+cp -a ${BOSH_COMPILE_TARGET}/prometheus_varnish_exporter-1.4.1.linux-amd64/prometheus_varnish_exporter ${BOSH_INSTALL_TARGET}/bin
+mv ${BOSH_INSTALL_TARGET}/bin/prometheus_varnish_exporter ${BOSH_INSTALL_TARGET}/bin/varnish_exporter 
