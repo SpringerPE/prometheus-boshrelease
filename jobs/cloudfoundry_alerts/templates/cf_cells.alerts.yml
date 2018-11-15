@@ -18,8 +18,20 @@ groups:
           service: cf
           severity: warning
         annotations:
-          summary: "CF `{{$labels.environment}}/{{$labels.bosh_deployment}}` overall available memory too low: {{$value}}%"
-          description: "CF `{{$labels.environment}}/{{$labels.bosh_deployment}}` had less than {{$value}}% of overall available memory during the last <%= p('cloudfoundry_alerts.overall_available_memory.evaluation_time') %>"
+          summary: "CF `{{$labels.environment}}/{{$labels.bosh_deployment}}/{{$labels.bosh_job_name}}` overall available memory too low: {{$value}}%"
+          description: "CF `{{$labels.environment}}/{{$labels.bosh_deployment}}/{{$labels.bosh_job_name}}` had less than {{$value}}% of overall available memory during the last <%= p('cloudfoundry_alerts.overall_available_memory.evaluation_time') %>"
+
+      <% if_p('cloudfoundry_alerts.overall_available_memory_fixed.threshold') do |threshold| %>
+      - alert: CFCellsOverallAvailableMemoryTooLowFixed
+        expr: sum(avg(firehose_value_metric_rep_capacity_remaining_memory) by(environment, bosh_deployment, bosh_job_name, bosh_job_id)) by(environment, bosh_deployment, bosh_job_name) / 1000 < <%= threshold %>
+        for: <%= p('cloudfoundry_alerts.overall_available_memory.evaluation_time') %>
+        labels:
+          service: cf
+          severity: warning
+        annotations:
+          summary: "CF `{{$labels.environment}}/{{$labels.bosh_deployment}}/{{$labels.bosh_job_name}}` overall available memory too low: {{$value}}GiB"
+          description: "CF `{{$labels.environment}}/{{$labels.bosh_deployment}}/{{$labels.bosh_job_name}}` had less than {{$value}}GiB of overall available memory during the last <%= p('cloudfoundry_alerts.overall_available_memory.evaluation_time') %>"
+      <% end %>
 
       - alert: CFCellsMaxAvailableMemoryTooLow
         expr: max(avg(firehose_value_metric_rep_capacity_remaining_memory) by(environment, bosh_deployment, bosh_job_name, bosh_job_id)) by(environment, bosh_deployment, bosh_job_name) < <%= p('cloudfoundry_alerts.max_available_memory.threshold') %>
