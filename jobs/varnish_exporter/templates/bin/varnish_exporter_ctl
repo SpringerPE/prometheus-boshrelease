@@ -6,7 +6,7 @@ RUN_DIR=/var/vcap/sys/run/varnish_exporter
 LOG_DIR=/var/vcap/sys/log/varnish_exporter
 TMP_DIR=/var/vcap/sys/tmp/varnish_exporter
 STORE_DIR=/var/vcap/store/varnish_exporter
-export PATH=/var/vcap/packages/varnish-cache/bin:${PATH}
+export PATH=/var/vcap/packages/varnish/bin:/var/vcap/packages/varnish-cache/bin:${PATH}
 mkdir -p ${RUN_DIR} ${LOG_DIR} ${TMP_DIR} ${STORE_DIR}
 PIDFILE=${RUN_DIR}/varnish_exporter.pid
 source /var/vcap/packages/varnish_exporter/common/utils.sh
